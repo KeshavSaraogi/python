@@ -38,43 +38,56 @@ def main():
     if decision == 'n':
         exit
     else:
-        while endTheGame is False:
-            humanScore = 0
-            computerScore = 0
-            humanCards = []
-            computerCards = []
-            
-            cFirst = generateInitialComputerCards()
-            hFirst, hSecond = generateInitialHumanCards()
-            
-            humanCards.append(hFirst)
-            humanCards.append(hSecond)
-            computerCards.append(cFirst)
+        humanScore = 0
+        computerScore = 0
+        humanCards = []
+        computerCards = []
+        
+        cFirst = generateInitialComputerCards()
+        hFirst, hSecond = generateInitialHumanCards()
+        
+        humanCards.append(hFirst)
+        humanCards.append(hSecond)
+        computerCards.append(cFirst)
 
-            humanScore = calculateScore(humanCards)
-            computerScore = calculateScore(computerCards)
+        humanScore = calculateScore(humanCards)
+        computerScore = calculateScore(computerCards)
 
-            print("Your Cards Are: " + str(humanCards) + " \nYour Score Is: " + str(humanScore))
-            print("Computer Cards Are: " + str(computerCards) + " \nComputer Score Is: " + str(computerScore))
+        print("Your Cards Are: " + str(humanCards) + " \nYour Score Is: " + str(humanScore))
+        print("Computers First Card Is: " + str(computerCards) + " \nComputer Score Is: " + str(computerScore))
 
-            if humanScore > 21:
-                endTheGame = True
-            elif computerScore > 21:
-                endTheGame = True
-            else:
-                card = getAnotherCard()
-                if card == 'n':                                         
-                    #simulate computer and calculate winner
-                    #make sure the human score and computer score is below 21
-                    #get cards for computer, maximum one more than human 
-                    #if he reaches a higher score but less than 21, computer wins
-                    #but if the score is above 21, computer losess
-                    pass
-                if card == 'y':                                         
-                    #continue to provide cards and later simulate computer and calculate winner 
-                    #until the cards come up to 21, the human can hit
-                    #as soon as the human asks for a pass, we go back to the computer.               
-                    pass
+        while (endTheGame is False):
+            direction = input("Press 'h' for Hit or press 'p' for Pass: ")
+            if direction == 'h':
+                card = generateCard()
+                humanCards.append(card)
+                humanScore = calculateScore(humanCards)
 
+                print(humanCards)
+                print("Your Score Is: " + str(humanScore))
+
+                if int(humanScore == 21):
+                    print("You Hit 21. You Won The Game")
+                    endTheGame = True
+
+                if int(humanScore) > 21:
+                    print("Your Score Is Above 21. You lost.")
+                    endTheGame = True
+            elif direction == 'p':
+                while (computerScore <= 21):
+
+                    card = generateCard()
+                    computerCards.append(card)
+                    computerScore = calculateScore(computerCards)
+
+                    print(computerCards)
+                    print("Computer Score Is: " + str(computerScore))
+                
+                    if int(computerScore) > humanScore and int(computerScore) < 21:
+                        print("Computer Wins.")
+                        endTheGame = True
+                    elif (int(computerScore) > 21):
+                        print("Computer Score Is Above 21. You Win.")
+                        endTheGame = True
 if __name__ == "__main__":
     main()
