@@ -111,10 +111,6 @@ def processIngridients(coffeeSelection, finalWater = 300, finalMilk   = 200, fin
         print(f"Coffee: {finalCoffee}g")
         return finalWater, finalMilk, finalCoffee
 
-def processReport():
-
-
-
 def main():
     endTheMachine = False
 
