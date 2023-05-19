@@ -27,8 +27,7 @@ resources = {
     }
 }
 
-def displayOptions():
-    print("Welcome to Coffee Shop")
+def displayCoffeeOptions():
     print(f"Here Are Your Options: \n1. Espresso   -- ${espresso}\n2. Latte      -- ${lattee}\n3. Cappuccino -- ${cappuccino}")
     coffee = int(input("Which Coffee Would You Like Today? "))
     return coffee
@@ -77,15 +76,68 @@ def processChangeCoins(amountEntered, coffeeSelection):
         else:
             print(f"Insufficient funds. Returning Your ${amountEntered}")
 
+def processIngridients(coffeeSelection, finalWater = 300, finalMilk   = 200, finalCoffee = 100):
+
+    if coffeeSelection == 1:
+        finalWater  = finalWater - resources["espresso"]["water"]
+        finalMilk   = finalMilk - resources["espresso"]["milk"]
+        finalCoffee = finalCoffee - resources["espresso"]["coffee"]
+
+        print(f"The Resources In The Machine Are: ")
+        print(f"Water: {finalWater}ML")
+        print(f"Milk: {finalMilk}ML")
+        print(f"Coffee: {finalCoffee}g")
+        return finalWater, finalMilk, finalCoffee
+
+    elif coffeeSelection == 2:
+        finalWater  = finalWater - resources["lattee"]["water"]
+        finalMilk   = finalMilk - resources["lattee"]["milk"]
+        finalCoffee = finalCoffee - resources["lattee"]["coffee"]
+        
+        print(f"The Resources In The Machine Are: ")
+        print(f"Water: {finalWater}ML")
+        print(f"Milk: {finalMilk}ML")
+        print(f"Coffee: {finalCoffee}g")
+        return finalWater, finalMilk, finalCoffee
+
+    else: 
+        finalWater  = finalWater  - resources["cappuccino"]["water"]
+        finalMilk   = finalMilk   - resources["cappuccino"]["milk"]
+        finalCoffee = finalCoffee - resources["cappuccino"]["coffee"]
+
+        print(f"The Resources In The Machine Are: ")
+        print(f"Water: {finalWater}ML")
+        print(f"Milk: {finalMilk}ML")
+        print(f"Coffee: {finalCoffee}g")
+        return finalWater, finalMilk, finalCoffee
+
 def processReport():
-    finalWater  = 300
-    finalMilk   = 200
-    finalCoffee = 100
+
+
 
 def main():
-    coffee = displayOptions()
-    amount = processCoins(coffee)
-    processChangeCoins(amount, coffee)
+    endTheMachine = False
+
+    while endTheMachine is False:
+        print("Welcome To The Coffee Shop")
+        print("Here Are Your Options: \n1. Order Coffee\n2. Print Report\n3. Exit")
+        option = int(input("Enter Your Preference: "))
+
+        if option == 1:
+            coffeeSelected = displayCoffeeOptions()
+            amount = processCoins(coffeeSelected)
+            processChangeCoins(amount, coffeeSelected)
+            processIngridients(coffeeSelected)
+        
+        elif option == 2:
+            processReport()
+        
+        elif option == 3:
+            break
+
+        else:
+            print("Invalid Input")
+            break
 
 if __name__ == "__main__":
     main()
