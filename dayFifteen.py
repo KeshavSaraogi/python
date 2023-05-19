@@ -125,9 +125,6 @@ def main():
             processChangeCoins(amount, coffeeSelected)
             processIngridients(coffeeSelected)
         
-        elif option == 2:
-            processReport()
-        
         elif option == 3:
             break
 
